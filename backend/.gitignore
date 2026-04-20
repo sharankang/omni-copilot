@@ -1,0 +1,25 @@
+# Virtual Environments
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Credentials & Secrets (CRITICAL)
+token.json
+credentials.json
+*.pem
+
+# Uploads & User Data
+uploads/
+
+# Temporary Output Files & DebugLogs
+error_trace.txt
+out*.json
+test_dummy.pdf
