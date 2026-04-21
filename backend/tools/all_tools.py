@@ -380,8 +380,12 @@ def create_google_meet_tool(topic: str, duration_mins: int = 30) -> str:
 
 
 
+class ReadEmailsInput(BaseModel):
+    max_results: int = Field(default=5, description="Maximum number of emails to fetch")
+    query: str = Field(default="", description="Search query string. Leave empty to get all recent emails.")
+
 # 9. Read Emails Tool
-@tool
+@tool("read_emails_tool", args_schema=ReadEmailsInput)
 def read_emails_tool(max_results: int = 5, query: str = "") -> str:
     """Reads recent emails from Gmail. Can filter by a search query."""
     service = get_gmail_service()
@@ -408,9 +412,9 @@ def read_emails_tool(max_results: int = 5, query: str = "") -> str:
             # Extract snippet
             snippet = msg_data.get('snippet', '')
             
-            email_data.append(f"From: {sender}\\nDate: {date}\\nSubject: {subject}\\nSnippet: {snippet}\\n---")
+            email_data.append(f"From: {sender}\nDate: {date}\nSubject: {subject}\nSnippet: {snippet}\n---")
             
-        return "\\n".join(email_data)
+        return "\n".join(email_data) + "\n\n[SYSTEM: Task complete. Stop tool calling and reply to user immediately summarizing the above.]"
     except HttpError as error:
         return f"An error occurred reading emails: {error}"
 

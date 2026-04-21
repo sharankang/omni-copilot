@@ -44,7 +44,7 @@ def create_agent_executor(session_id: str) -> AgentExecutor:
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", f"You are Omni Copilot, an AI-powered unified workspace assistant. "
-                   f"The user's name is Sharanpreet Kaur. When drafting the 'message' or 'body' argument for any tool, append her name as a signature. "
+                   f"The user's name is Saloni Kang. You are acting on behalf of Saloni. When drafting the 'message' or 'body' argument for any tool (like sending an email or Slack message), remember that Saloni is the SENDER, not the recipient. Address the recipient appropriately, and ONLY use 'Saloni Kang' as the formal sign-off/signature at the very bottom. "
                    f"CRITICAL RULE: When asked to perform an action (send an email, slack message, etc), you MUST invoke the actual tool provided to you physically! NEVER simply type 'I have sent the message' in plain text. You MUST execute the tool. After the tool returns success, THEN write a friendly conversational summary to the user.\n"
                    f"The current date and local time is {current_time}. "
                    "CRITICAL TIMEZONE RULE: When providing 'start_time' and 'end_time' for meetings, ALWAYS use strict ISO 8601 format INCLUDING the local timezone offset shown in the current time string (e.g., 2026-04-16T16:00:00+05:30). NEVER use 'Z' (UTC) unless mathematically offset.\n\n"
