@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --font-sans: var(--font-inter);
+  --font-outfit: var(--font-outfit);
+}
+
+@layer base {
+  :root {
+    /* Highly dynamic dark theme logic for "Space Glassmorphism" */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    
+    --primary: 250 100% 65%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 5% 12%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 5% 25%;
+    --muted-foreground: 240 5% 65%;
+    
+    --border: 240 5% 20%;
+    --input: 240 5% 15%;
+    --ring: 250 100% 65%;
+  }
+
+  .light {
+    --background: 240 5% 98%;
+    --foreground: 240 10% 4%;
+    
+    --primary: 250 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 240 10% 4%;
+    
+    --muted: 240 5% 92%;
+    --muted-foreground: 240 5% 45%;
+    
+    --border: 240 5% 85%;
+    --input: 0 0% 100%;
+    --ring: 250 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+}
+
+/* Glassmorphism Panel Core */
+.glass-panel {
+  @apply bg-foreground/5 backdrop-blur-2xl border border-foreground/10 shadow-xl transition-all duration-300;
+}
+
+/* Scrollbar customization */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-foreground/10 rounded-full;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground/20;
+}
+
+/* Dynamic space mesh */
+.bg-mesh-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -10;
+  pointer-events: none;
+  background: var(--background);
+}
+
+.bg-mesh-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(128, 128, 128, 0.15) 1.5px, transparent 1.5px);
+  background-size: 36px 36px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  filter: blur(120px);
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(0,0,0,0) 70%);
+  animation: float1 25s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+  bottom: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, rgba(0,0,0,0) 70%);
+  animation: float2 30s ease-in-out infinite alternate-reverse;
+}
+
+.blob-3 {
+  top: 40%;
+  left: 40%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(0,0,0,0) 70%);
+  animation: float3 20s ease-in-out infinite alternate;
+}
+
+/* Light mode blob overrides */
+.light .blob-1 { background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(0,0,0,0) 70%); }
+.light .blob-2 { background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(0,0,0,0) 70%); }
+.light .blob-3 { background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(0,0,0,0) 70%); }
+
+@keyframes float1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(10%, 15%) scale(1.1); }
+}
+@keyframes float2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10%, -10%) scale(1.2); }
+}
+@keyframes float3 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-15%, 5%) scale(0.9); }
+}
